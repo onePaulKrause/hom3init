@@ -1,0 +1,7 @@
+# Pin the toolchain so the build is reproducible on a clean machine.
+# hom3init needs only a recent stable Rust and the musl target. Pin to a
+# specific version for byte-reproducibility; bump deliberately.
+[toolchain]
+channel = "1.82.0"
+targets = ["aarch64-unknown-linux-musl"]
+profile = "minimal"
