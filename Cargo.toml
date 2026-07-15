@@ -1,0 +1,28 @@
+[package]
+name = "hom3init"
+version = "0.1.0"
+edition = "2021"
+description = "A sovereign, airgap-first PID 1 (init) for aarch64 Linux - zero external crates"
+# LICENSE DECISION PENDING - see README.md, section "License".
+# Recommended if truly open: "MIT" or "BSD-3-Clause" (both patent-safe here).
+# Do NOT use "Apache-2.0": its express patent grant can undercut a pending
+# patent on the excluded methods. Or keep a source-available custom license.
+license = "MIT"
+repository = ""
+readme = "README.md"
+
+# Zero external crates by design (airgap build, minimal trusted surface).
+# The few kernel calls we need are declared as extern "C" against the static
+# musl libc we link. A later tightening step can drop even libc by issuing raw
+# aarch64 syscalls (no_std). Marked in src/sys.rs.
+#
+# Binary targets are auto-discovered: src/main.rs -> `hom3init`,
+# src/bin/hom3recovery.rs -> `hom3recovery`.
+[dependencies]
+
+[profile.release]
+opt-level = "z"      # size: this is an init, not a workload
+lto = true
+codegen-units = 1
+panic = "abort"      # an init does not unwind; a panic -> safe halt
+strip = true
