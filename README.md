@@ -77,7 +77,9 @@ in `src/boot.rs`):
 - **Wired link-down** - rfkill covers radios; netlink `RTM_SETLINK` down for wired/USB interfaces is pending.
 - **libc removal** - `src/sys.rs` is a tiny FFI shim over musl; the set is small on purpose so a `no_std` raw-syscall version is a short step.
 
+## License
 
+MIT - See "License".
 ---
 
 1<3
